@@ -1,0 +1,97 @@
+CREATE EXTENSION hstore;
+CREATE EXTENSION dblink;
+
+CREATE TABLE resources_history (
+  id                    serial,
+  name                  character varying(255),
+  service_id            integer,
+  position              integer,
+  can_one_day_previous  boolean,
+  service_time          integer,
+  after_service_time    integer,
+  can_record            boolean,
+  how_get               text,
+  payment               text,
+  term                  text,
+  recipients            text,
+  reason                text,
+  result                text,
+  documents_push        text,
+  documents_pull        text,
+  information           text,
+  control               text,
+  procedure             text,
+  organizations         text,
+  acts                  text,
+  avg_time_fiz          integer,
+  avg_time_jur          integer,
+  norm_deviation        integer,
+  bad_deviation         integer,
+  ul_service_time       integer
+);
+
+CREATE TABLE services_history (
+  id            serial,
+  code          character varying(255),
+  name          text,
+  visible       boolean,
+  status        character varying(255),
+  letter_code   character varying(255),
+  short_name    text,
+  service_time  integer,
+  parent_id     integer
+);
+
+CREATE TABLE slots_history (
+  id                    serial,
+  resource_id           integer,
+  number                character varying(255),
+  status                character varying(255),
+  created_at            timestamp without time zone,
+  updated_at            timestamp without time zone,
+  user_id               integer,
+  window_number         character varying(255),
+  service_date          timestamp without time zone,
+  pin                   character varying(255),
+  start_time            timestamp without time zone,
+  end_time              timestamp without time zone,
+  mark                  character varying(255),
+  last_name             character varying(255),
+  first_name            character varying(255),
+  middle_name           character varying(255),
+  denial_reason         text,
+  actual_time_call      timestamp without time zone,
+  counter_id            integer,
+  exact_time            boolean,
+  print_flag            integer,
+  initial_service_date  timestamp without time zone,
+  passport_number       character varying(255),
+  passport_series       character varying(255),
+  objects_count         integer,
+  organization_name     character varying(255),
+  ogrn                  bigint,
+  inn                   bigint,
+  kpp                   integer,
+  office_id             integer,
+  recording_method      character varying(255),
+  book_id               character varying(255),
+  activate_pin_date     timestamp without time zone,
+  service_time          integer,
+  uuid                  character varying(255),
+  rank                  double precision
+);
+
+CREATE TABLE office_ip_id (
+  id                 serial,
+  office_id          integer,
+  dictionary_id      integer,
+  region             text,
+  name               text,
+  service_start_id   integer,
+  service_end_id     integer,
+  resource_start_id  integer,
+  resource_end_id    integer,
+  slot_start_id      integer,
+  slot_end_id        integer,
+  ip                 character varying(255)
+);

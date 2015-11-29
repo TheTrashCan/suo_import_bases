@@ -1,0 +1,10 @@
+.project
+.idea
+.DS_Store
+
+bases/*
+passwords/*
+tmp/*
+
+!*/.gitkeep
+
