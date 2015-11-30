@@ -48,9 +48,6 @@ DROP TABLE additional_service_times;
 SELECT 'таблица applicant_types больше не нужна' AS info;
 DROP TABLE applicant_types;
 
---SELECT 'таблица creeping_line_patterns больше не нужна' AS info;
---DROP TABLE creeping_line_patterns;
-
 SELECT 'таблица feedback_questions больше не нужна' AS info;
 DROP TABLE feedback_questions;
 
@@ -59,9 +56,6 @@ DROP TABLE instance_types;
 
 SELECT 'таблица mortgage_types больше не нужна' AS info;
 DROP TABLE mortgage_types;
-
---SELECT 'таблица offices_resources больше не нужна' AS info;
---DROP TABLE offices_resources;
 
 SELECT 'таблица register_actions больше не нужна' AS info;
 DROP TABLE register_actions;
@@ -141,19 +135,6 @@ UPDATE settings SET office_id = office_id + (SELECT *
 UPDATE offices_resources SET office_id = office_id + (SELECT *
     FROM dblink('dbname=mydb', 'select case when max(id) is null then 0 else max(id) end from offices')
       AS t1(id int));
-
--- проставляем dictionary_id из основной базы
--- SELECT 'проставляем dictionary_id из основной базы' AS info;
-
--- UPDATE offices SET dictionary_id = (
--- SELECT id
---     FROM dblink('dbname=mydb', 'select id, keys -> ''code'' AS code FROM dictionaries')
---       AS t1(id int, code VARCHAR) WHERE code = (
---         SELECT keys -> 'code' AS code
---           FROM dictionaries
---             WHERE dictionaries.id = offices.dictionary_id
---       )
--- );
 
 -- обновляем все id, которые связаны с пользователями 
 SELECT 'обновляем все id, которые связаны с users' AS info;
@@ -405,10 +386,6 @@ UPDATE users SET email=CONCAT('a', CAST(id AS VARCHAR),CAST(email AS VARCHAR)) W
 	email IN (SELECT email FROM dblink('dbname=mydb', 'select email from users')
       AS t1(email VARCHAR));
 
--- удаление глобальных пользователей
--- SELECT 'удаление глобальных пользователей';
--- DELETE FROM users WHERE roles_mask = 4 OR roles_mask = 8 OR roles_mask = 12;
-
 -- удаление "плохих" талонов
 SELECT 'удаление "плохих" талонов' AS info;
 DELETE FROM slots WHERE created_at >= CURRENT_DATE AND status != 'ready' AND status != 'not_come' AND status != 'denial_service';
@@ -420,8 +397,5 @@ UPDATE offices SET remote_instance=false;
 -- 'удаление ненужных таблиц'
 SELECT 'таблица dictionaries больше не нужна' AS info;
 DROP TABLE dictionaries;
-
--- SELECT 'таблица activities больше не нужна' AS info;
--- DROP TABLE activities;
 
 SELECT id, name, region FROM offices;

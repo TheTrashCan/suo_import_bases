@@ -1,39 +1,3 @@
--- в базе suo_history
-
--- INSERT INTO office_ip_id (office_id, dictionary_id, region, name, service_start_id, service_end_id, resource_start_id, resource_end_id, slot_start_id, slot_end_id)
--- VALUES (
---     1 + (SELECT *
---          FROM dblink('dbname=mydb', 'select case when max(id) is null then 0 else max(id) end from offices')
---              AS t1(id int)),
---
---     (SELECT *
---        FROM dblink('dbname=foo1', 'select dictionary_id from offices limit 1')),
---
---     (SELECT *
---        FROM dblink('dbname=foo1', 'select region from offices limit 1')),
---
---     (SELECT *
---       FROM dblink('dbname=foo1', 'select name from offices limit 1'))
---
---     1 + (select case when max(id) is null then 0 else max(id) end from services_history),
---
---     (select case when max(id) is null then 0 else max(id) end from services_history) + (SELECT *
---                                                                                 FROM dblink('dbname=foo1', 'select case when max(id) is null then 0 else max(id) end from services')
---                                                                                     AS t1(id int)),
---
---     1 + (select case when max(id) is null then 0 else max(id) end from resources_history),
---
---     (select case when max(id) is null then 0 else max(id) end from resources_history) + (SELECT *
---                                                                                  FROM dblink('dbname=foo1', 'select case when max(id) is null then 0 else max(id) end from resources')
---                                                                                      AS t1(id int)),
---
---     1 + (select case when max(id) is null then 0 else max(id) end from slots_history),
---
---     (select case when max(id) is null then 0 else max(id) end from slots_history) + (SELECT *
---                                                                              FROM dblink('dbname=foo1', 'select case when max(id) is null then 0 else max(id) end from slots')
---                                                                                  AS t1(id int))
--- );
-
 UPDATE office_ip_id SET
   office_id = 1 + (SELECT *
                    FROM dblink('dbname=mydb', 'select case when max(id) is null then 0 else max(id) end from offices')

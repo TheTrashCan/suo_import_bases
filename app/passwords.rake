@@ -6,7 +6,6 @@ namespace :passwords do
 
     f.write("Office id: #{lastid}\n\n")
 
-    #User.all.each do |u|
     User.where(office_id: lastid, state: "active").find_each do |u|
       psw = ([*('A'..'Z'), *('0'..'9')]-%w(0 1 I O)).sample(8).join
       office = u.office_id.nil? ? " " : u.office.name

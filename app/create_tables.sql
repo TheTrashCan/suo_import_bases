@@ -1,6 +1,5 @@
 CREATE EXTENSION hstore;
 
--- добавить security_images (переносить security_images?)
 CREATE TABLE security_images (
   id          integer,
   file        character varying(255),
